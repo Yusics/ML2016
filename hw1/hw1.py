@@ -8,7 +8,7 @@ class Model(object):
 
 	def __init__(self):
 		self.learning_rate  = 1e-3
-		self.iteration      = 30000
+		self.iteration      = 20000
 		self.lamda          = 1
 		self.epsilon        = 1e-8
 		self.hour           = 9
@@ -101,7 +101,7 @@ class Model(object):
 			#sys.stdout.write("\r training loss: %.3f" % self.loss)
 			#sys.stdout.flush()
 
-		for i in range(self.y.shape[0]):
+		'''for i in range(self.y.shape[0]):
 			if abs(self.y[i] - (np.dot(self.w, self.x_para[:,i]) + self.b)) > 11:
 				 loss.append(i)
 
@@ -128,16 +128,10 @@ class Model(object):
 				v_t_b = self.beta2*v_t_b + (1-self.beta2) * (grad_b**2)
 
 			self.w -=  lr_t * m_t_w/(np.sqrt(v_t_w) + self.epsilon)
-			self.b -=  lr_t * m_t_b/(np.sqrt(v_t_b) + self.epsilon)
+			self.b -=  lr_t * m_t_b/(np.sqrt(v_t_b) + self.epsilon)'''
 
 	
-	'''def test(self):
-		self.test_loss = 0
-		for i in xrange(self.y.shape[0]-50, self.y.shape[0]):
-			self.test_loss += abs(self.y[i] - (np.dot(self.w, self.x_para[:,i]) + self.b))
-			print "y: ",self.y[i],"   predict: ",(np.dot(self.w, self.x_para[:,i]) + self.b)
-		self.test_loss = self.test_loss/50
-		print "test_loss: ", self.test_loss'''
+	
 
 	def test(self):
 
