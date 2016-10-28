@@ -1,2 +1,2 @@
 #!/bin/bash
-python2 pattern.py $1 $2 
+python2 pattern_svm_old.py $1 $2 

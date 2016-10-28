@@ -1,2 +1,2 @@
 #!/bin/bash
-python2 logistic_test.py $1 $2 > $3
+python2 svm_test.py $1 $2 > $3
