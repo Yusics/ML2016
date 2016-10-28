@@ -9,7 +9,7 @@ class Model(object):
 
 	def __init__(self):
 		self.learning_rate  = 1e-3
-		self.iteration      = 20000
+		self.iteration      = 100000
 		self.lamda          = 1e-3
 		self.C              = 1
 		self.epsilon        = 1e-8
