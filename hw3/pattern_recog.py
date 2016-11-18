@@ -121,25 +121,6 @@ class Model(object):
 		
 
 
-	def testing(self):
-
-		fout = open("result.csv", 'w')
-		fout.write("ID,class\n")
-
-		test_p = pickle.load(open(sys.argv[1]+"/test.p","rb"))
-		test_data = np.array(test_p.get("data"))
-
-		cl_r = np.reshape(test_data[:,0:1024], [10000, 1, 32, 32])
-		cl_g = np.reshape(test_data[:,1024:2048], [10000, 1, 32, 32])
-		cl_b = np.reshape(test_data[:,2048:3072], [10000, 1, 32, 32])
-		cl = np.concatenate((cl_r, cl_g, cl_b), axis=1)
-
-		result = self.cnn_model.predict(cl)
-		for i in range(10000):
-			class_id = np.argmax(result[i])
-			fout.write("%d,%d\n" % (i, class_id))
-
-
 
 
 
@@ -147,7 +128,7 @@ class Model(object):
 			
 def main():
 	model = Model()
-	model.training(1)
+	model.training(70)
 	model.self_training()
 	
 	
