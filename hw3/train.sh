@@ -1,2 +1,2 @@
 #!/bin/bash
-python2 encode.py $1 $2 
+python2 pattern_recog.py $1 $2 
