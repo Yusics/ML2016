@@ -19,15 +19,12 @@ K.set_image_dim_ordering('th')
 os.environ["THEANO_FLAGS"] = "device=gpu0"
 
 
-
-
 class CNNModel(object):
 	def __init__(self):
 		self.class_num = 10
 		self.epoch = 80
 
-
-		train_data = pickle.load(open("data/all_label.p","rb"))
+		train_data = pickle.load(open(sys.argv[1]+"/all_label.p","rb"))
 		train_data = np.array(train_data)
 
 		self.train_y = np.zeros((5000,10))
@@ -45,19 +42,12 @@ class CNNModel(object):
 				self.train_x = np.concatenate((self.train_x, cl),axis=0)
 
 		self.train_x = np.delete(self.train_x, 0, 0)
+
+		self.train_x = self.train_x.astype('float32')
+		self.train_x /= 255
 	
 
 	def training(self):
-
-
-		unlabel_raw = pickle.load(open(sys.argv[1]+"/all_unlabel.p","rb"))
-		unlabel_raw = np.array(unlabel_raw)
-		cl_r = np.reshape(unlabel_raw[:,0:1024], [45000, 1, 32, 32])
-		cl_g = np.reshape(unlabel_raw[:,1024:2048], [45000, 1, 32, 32])
-		cl_b = np.reshape(unlabel_raw[:,2048:3072], [45000, 1, 32, 32])
-		self.unlabel_data = np.concatenate((cl_r, cl_g, cl_b), axis=1)
-		self.unlabel_data =  self.unlabel_data.astype('float32')
-		self.unlabel_data /= 255
 
 		self.cnn_model = Sequential()
 
@@ -119,9 +109,9 @@ class CNNModel(object):
 
 
 		self.cnn_model.compile(loss='categorical_crossentropy',optimizer='Adam',metrics=['accuracy'])
-		self.cnn_model.fit(self.train_x, self.train_y, batch_size=500, nb_epoch=1, shuffle=True)
+		self.cnn_model.fit(self.train_x, self.train_y, batch_size=500, nb_epoch=120, shuffle=True)
 
-		self.cnn_model.save(sys.argv[2])
+		self.cnn_model.save('trained_model')
 		
 
 	def autoencoderr(self):
@@ -136,9 +126,15 @@ class CNNModel(object):
 		cl /= 255
 
 
-		self.unlabel_data = pickle.load(open(sys.argv[1]+"/unlabel_data", "rb"))
+		unlabel_raw = pickle.load(open(sys.argv[1]+"/all_unlabel.p","rb"))
+		unlabel_raw = np.array(unlabel_raw)
+		cl_r = np.reshape(unlabel_raw[:,0:1024], [45000, 1, 32, 32])
+		cl_g = np.reshape(unlabel_raw[:,1024:2048], [45000, 1, 32, 32])
+		cl_b = np.reshape(unlabel_raw[:,2048:3072], [45000, 1, 32, 32])
+		self.unlabel_data = np.concatenate((cl_r, cl_g, cl_b), axis=1)
 		self.unlabel_data =  self.unlabel_data.astype('float32')
 		self.unlabel_data /= 255
+
 		train_auto = np.concatenate((self.train_x, self.unlabel_data, cl))
 
 		input_img = Input(shape=(3, 32, 32))
@@ -166,21 +162,14 @@ class CNNModel(object):
 		self.autoencoder.compile(optimizer='Adam', loss='binary_crossentropy')
 
 		self.autoencoder.fit(train_auto, train_auto,
-                nb_epoch=1,
+                nb_epoch=40,
                 batch_size=1000,
                 shuffle=True, validation_data=(cl,cl)
                 )
 		
-			
 
-		print "\nits encoder weight \n"
 		
 		self.encoder = Model(input = input_img, output = encoded)
-		
-		
-
-
-
 
 
 			
