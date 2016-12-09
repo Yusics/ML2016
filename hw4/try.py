@@ -37,6 +37,7 @@ svd = TruncatedSVD(24)
 normalizer = Normalizer(copy=False)
 lsa = make_pipeline(svd, normalizer)
 X = lsa.fit_transform(X)
+print X.shape
 explained_variance = svd.explained_variance_ratio_.sum()
 true_k = 20
 
