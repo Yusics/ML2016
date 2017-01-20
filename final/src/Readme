@@ -1,0 +1,24 @@
+把七個科目的資料解壓縮成 .csv 檔，存入 "data" 這個資料夾，放入 "src" 這個資料夾中
+此時 src 資料夾中會有 data, preprocess.py, preprocess-test.py, countCommonWords.py, stop_words.txt, model（空資料夾，為了存放經過處理的檔案所放的）
+
+model 1的執行方法
+
+$ python preprocess.py
+$ python preprocess-test.py
+$ python countCommonWords.py
+$ python process_pos.py
+$ python output.py
+得到的最終tag叫做 result_pos.csv
+
+
+model 2的執行方法
+
+final.sh usage: ./final.sh $1
+The document path is ./data/document_name.csv and it is set already
+$1: output.csv
+
+
+
+model 3的執行方法
+
+$ python Model.py input_file（data資料夾的位置）

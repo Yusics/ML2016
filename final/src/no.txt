@@ -1,0 +1,9 @@
+MD
+JJ
+IN
+VB	verb, base form	take
+VBD	
+VBG	
+VBN	
+VBP	
+VBZ	
