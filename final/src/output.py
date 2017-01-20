@@ -25,11 +25,11 @@ for i in range(idx.shape[0]):
 		try:	
 			fout.write(result[i][0])
 		except:
-			fout.write("schroedinger-equation")
+			fout.write("schroedinger")
 		for j in xrange(1,len(result[i]),1):
 			try:
 				fout.write(' %s' % result[i][j])
 			except:
-				fout.write(' %s' % "schroedinger-equation")
+				fout.write(' %s' % "schroedinger")
 
 	fout.write('"\n')
